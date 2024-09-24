@@ -22,42 +22,77 @@ function checkAchievements(user, message, client, channel) {
 	let currentTime = new Date();
 	let userActivityData = userActivity[user];
 
-	// List of polite words
-	const politeWords = ['bonjour', 'bonsoir', 'salut', 'hello', 'coucou'];
+	checkNightOwlAchievement(user, currentTime, userActivityData, client, channel);
+	checkPoliteAchievement(user, message, userActivityData, client, channel);
+	checkChatterboxAchievement(user, userActivityData, client, channel);
+	checkLoyalViewerAchievement(user, currentTime, userActivityData, client, channel);
+	checkFirstBloodAchievement(user, userActivityData, client, channel);
+	checkHelpfulUserAchievement(user, message, userActivityData, client, channel);
+	checkEmoteLoverAchievement(user, message, userActivityData, client, channel);
+	checkGlitteryzouzAchievement(user, message, userActivityData, client, channel);
 
-	// Night Owl Achievement
+	// Save user activity after checking achievements
+	saveUserActivity();
+}
+
+function checkNightOwlAchievement(user, currentTime, userActivityData, client, channel) {
 	if ((currentTime.getHours() >= 23 || currentTime.getHours() < 6) && !userActivityData.achievements.includes("Oiseau de nuit")) {
 		client.say(channel, `${user} a gagné le badge "Oiseau de nuit" !`);
 		userActivityData.achievements.push("Oiseau de nuit");
 	}
+}
 
-	// Polite Achievement
+function checkPoliteAchievement(user, message, userActivityData, client, channel) {
+	const politeWords = ['bonjour', 'bonsoir', 'salut', 'hello', 'coucou'];
 	if (userActivityData.messages.length === 1 && politeWords.some(word => message.toLowerCase().includes(word)) && !userActivityData.achievements.includes("Poli")) {
 		client.say(channel, `${user} a gagné le badge "Poli" !`);
 		userActivityData.achievements.push("Poli");
 	}
+}
 
-	// Chatterbox Achievement
+function checkChatterboxAchievement(user, userActivityData, client, channel) {
 	if (userActivityData.messages.length === 10 && !userActivityData.achievements.includes("Bavard")) {
 		client.say(channel, `${user} a gagné le badge "Bavard" !`);
 		userActivityData.achievements.push("Bavard");
 	}
+}
 
-	// Early Bird Achievement
-	if ((currentTime.getHours() >= 6 && currentTime.getHours() < 9) && !userActivityData.achievements.includes("Lève-tôt")) {
-		client.say(channel, `${user} a gagné le badge "Lève-tôt" !`);
-		userActivityData.achievements.push("Lève-tôt");
-	}
-
-	// Loyal Viewer Achievement (active for at least 30 minutes)
+function checkLoyalViewerAchievement(user, currentTime, userActivityData, client, channel) {
 	const activeDuration = (currentTime - new Date(userActivityData.firstMessageTime)) / (1000 * 60); // Duration in minutes
 	if (activeDuration >= 30 && !userActivityData.achievements.includes("Spectateur fidèle")) {
 		client.say(channel, `${user} a gagné le badge "Spectateur fidèle" !`);
 		userActivityData.achievements.push("Spectateur fidèle");
 	}
+}
 
-	// Save user activity after checking achievements
-	saveUserActivity();
+function checkFirstBloodAchievement(user, userActivityData, client, channel) {
+	if (Object.keys(userActivity).length === 1 && !userActivityData.achievements.includes("Premier sang")) {
+		client.say(channel, `${user} a gagné le badge "Premier sang" !`);
+		userActivityData.achievements.push("Premier sang");
+	}
+}
+
+function checkHelpfulUserAchievement(user, message, userActivityData, client, channel) {
+	if (message.toLowerCase().includes('help') && !userActivityData.achievements.includes("Utilisateur utile")) {
+		client.say(channel, `${user} a gagné le badge "Utilisateur utile" !`);
+		userActivityData.achievements.push("Utilisateur utile");
+	}
+}
+
+function checkEmoteLoverAchievement(user, message, userActivityData, client, channel) {
+	const emoteCount = (message.match(/:\w+:/g) || []).length;
+	if (emoteCount > 5 && !userActivityData.achievements.includes("Amoureux des émoticônes")) {
+		client.say(channel, `${user} a gagné le badge "Amoureux des émoticônes" !`);
+		userActivityData.achievements.push("Amoureux des émoticônes");
+	}
+}
+
+function checkGlitteryzouzAchievement(user, message, userActivityData, client, channel) {
+	const glitteryzouzWords = ['vegan', 'veganism', 'tofu', 'glitch', 'bouclettes', 'didier'];
+	if (glitteryzouzWords.some(word => message.toLowerCase().includes(word)) && !userActivityData.achievements.includes("glitteryzouz")) {
+		client.say(channel, `${user} a gagné le badge "glitteryzouz" !`);
+		userActivityData.achievements.push("glitteryzouz");
+	}
 }
 
 // Twitch chat client configuration
