@@ -1,6 +1,7 @@
 const tmi = require('tmi.js');
 const fs = require('fs');
 const path = require('path');
+const stringSimilarity = require('string-similarity');
 require('dotenv').config({ path: './credentials.env' }); // Load environment variables from credentials.env
 
 // Path to the JSON file
@@ -17,6 +18,17 @@ function saveUserActivity() {
 	fs.writeFileSync(dataFilePath, JSON.stringify(userActivity, null, 2), 'utf8');
 }
 
+// Configuration for word sets and achievements
+const wordSets = [
+	{
+		words: ['secte', 'sectes'],
+		achievement: 'sectaire',
+		threshold: 0.8,
+		requiredCount: 5
+	},
+	// Add more word sets here as needed
+];
+
 // Function to check achievements
 function checkAchievements(user, message, client, channel) {
 	let currentTime = new Date();
@@ -30,6 +42,7 @@ function checkAchievements(user, message, client, channel) {
 	checkHelpfulUserAchievement(user, message, userActivityData, client, channel);
 	checkEmoteLoverAchievement(user, message, userActivityData, client, channel);
 	checkGlitteryzouzAchievement(user, message, userActivityData, client, channel);
+	checkWordUsageAchievements(user, message, userActivityData, client, channel);
 
 	// Save user activity after checking achievements
 	saveUserActivity();
@@ -44,9 +57,17 @@ function checkNightOwlAchievement(user, currentTime, userActivityData, client, c
 
 function checkPoliteAchievement(user, message, userActivityData, client, channel) {
 	const politeWords = ['bonjour', 'bonsoir', 'salut', 'hello', 'coucou'];
-	if (userActivityData.messages.length === 1 && politeWords.some(word => message.toLowerCase().includes(word)) && !userActivityData.achievements.includes("Poli")) {
-		client.say(channel, `${user} a gagné le badge "Poli" !`);
-		userActivityData.achievements.push("Poli");
+	const threshold = 0.8; // Similarity threshold
+
+	if (userActivityData.messages.length === 1) {
+		for (const word of politeWords) {
+			const similarity = stringSimilarity.compareTwoStrings(message.toLowerCase(), word);
+			if (similarity >= threshold && !userActivityData.achievements.includes("Poli")) {
+				client.say(channel, `${user} a gagné le badge "Poli" !`);
+				userActivityData.achievements.push("Poli");
+				break;
+			}
+		}
 	}
 }
 
@@ -95,6 +116,36 @@ function checkGlitteryzouzAchievement(user, message, userActivityData, client, c
 	}
 }
 
+function checkWordUsageAchievements(user, message, userActivityData, client, channel) {
+	const words = message.toLowerCase().split(/\s+/);
+	const wordUsage = userActivityData.wordUsage || {};
+
+	words.forEach(word => {
+		wordSets.forEach(set => {
+			set.words.forEach(targetWord => {
+				const similarity = stringSimilarity.compareTwoStrings(word, targetWord);
+				if (similarity >= set.threshold) {
+					if (!wordUsage[targetWord]) {
+						wordUsage[targetWord] = 0;
+					}
+					wordUsage[targetWord]++;
+				}
+			});
+		});
+	});
+
+	userActivityData.wordUsage = wordUsage;
+
+	wordSets.forEach(set => {
+		set.words.forEach(targetWord => {
+			if (wordUsage[targetWord] === set.requiredCount && !userActivityData.achievements.includes(set.achievement)) {
+				client.say(channel, `${user} a gagné le badge "${set.achievement}" !`);
+				userActivityData.achievements.push(set.achievement);
+			}
+		});
+	});
+}
+
 // Twitch chat client configuration
 const client = new tmi.Client({
 	options: { debug: true },
@@ -121,7 +172,8 @@ client.on('message', (channel, tags, message, self) => {
 		userActivity[user] = {
 			firstMessageTime: currentTime,
 			messages: [],
-			achievements: []
+			achievements: [],
+			wordUsage: {}
 		};
 	}
 	userActivity[user].messages.push({ content: message, time: currentTime });
@@ -130,12 +182,13 @@ client.on('message', (channel, tags, message, self) => {
 	checkAchievements(user, message, client, channel);
 
 	// Display achievements command
-	if (message.toLowerCase() === '!achievements') {
+	if (message.toLowerCase() === '!achievements' || message.toLowerCase() === '!badges') {
 		let achievements = userActivity[user].achievements.join(', ');
-		if (achievements.length === 0) {
+		let totalBadges = userActivity[user].achievements.length;
+		if (totalBadges === 0) {
 			achievements = 'Aucun badge gagné pour le moment.';
 		}
-		client.say(channel, `${user}, vos badges: ${achievements}`);
+		client.say(channel, `${user}, vos badges (${totalBadges}): ${achievements}`);
 	}
 });
 
