@@ -26,7 +26,77 @@ const wordSets = [
 		threshold: 0.8,
 		requiredCount: 5
 	},
+	{
+		words: ['dieu', 'dieux', 'divin'],
+		achievement: 'touchée par le divin',
+		threshold: 0.8,
+		requiredCount: 5
+	},
+	{
+		words: ['pipi', 'caca'],
+		achievement: 'Euphoriazouz',
+		threshold: 0.8,
+		requiredCount: 1 // Since we want either "pipi" or "caca" to trigger the achievement
+	},
 	// Add more word sets here as needed
+];
+
+// List of titles
+const titles = [
+	"Mage des Brumes Égarées",
+	"Évocateur de Légumes Sacrés",
+	"Chevalier de l'Ombre Murmurante",
+	"Paladin du Fromage Fondant",
+	"Sorcier de la Nuit Perdue",
+	"Barde des Échos Oubliés",
+	"Moine du Poing Chantant",
+	"Nécromancien des Croissants",
+	"Gardien du Grimoire de Poudre",
+	"Invocateur des Abysses Sucrées",
+	"Chaman des Vagues Silencieuses",
+	"Berserker du Café Maudit",
+	"Druide des Flammes Sauvages",
+	"Érudit des Fleurs Venimeuses",
+	"Chasseur de Nuages Errants",
+	"Rôdeur des Bois Tremblants",
+	"Artificier des Éclairs Chocolatés",
+	"Illusionniste des Rêves Brisés",
+	"Templier de l'Anchois Sacré",
+	"Assassin des Ombres Croustillantes",
+	"Comptable de Bhaal",
+	"Assassin Divin",
+	"Buff Princess",
+	"Barde des Ténèbres Lunaires",
+	"Voleur de Cœurs Impossibles",
+	"Cartographe des Étoiles Oubliées",
+	"Barbare-ella",
+	"Barbarde",
+	"Barbarbier",
+	"BarBarista",
+	"Barbardeur",
+	"Barbarracuda",
+	"Barbarbecue",
+	"Barbartiste",
+	"Barbarpapa",
+	"just a girl",
+	"créature du bosquet",
+	"créature de l'obscurité derrière la station service",
+	"gobelin de marchés",
+	"coureuse de remparts",
+	"petit loukoum",
+	"falafel d'amour",
+	"héroïne du royaume de OOO",
+	"kirby cosplayer",
+	"ANOMALY",
+	"twitchbot"
+];
+
+const items = [
+    "Épée", "Bouclier", "Amulette", "Anneau", "Casque", "Armure", "Bottes", "Gants", "Cape", "Bâton"
+];
+
+const natures = [
+    "obsidienne", "honte", "feu", "glace", "vent", "terre", "éclair", "ombre", "lumière", "eau"
 ];
 
 // Function to check achievements
@@ -44,6 +114,12 @@ function checkAchievements(user, message, client, channel) {
 	checkGlitteryzouzAchievement(user, message, userActivityData, client, channel);
 	checkWordUsageAchievements(user, message, userActivityData, client, channel);
 
+	// Check for title achievement
+	checkTitleAchievement(user, userActivityData, client, channel);
+
+	// Check for item award
+	checkItemAward(user, userActivityData, client, channel);
+
 	// Save user activity after checking achievements
 	saveUserActivity();
 }
@@ -57,7 +133,7 @@ function checkNightOwlAchievement(user, currentTime, userActivityData, client, c
 
 function checkPoliteAchievement(user, message, userActivityData, client, channel) {
 	const politeWords = ['bonjour', 'bonsoir', 'salut', 'hello', 'coucou'];
-	const threshold = 0.8; // Similarity threshold
+	const threshold = 0.8; // Similar threshold
 
 	if (userActivityData.messages.length === 1) {
 		for (const word of politeWords) {
@@ -109,7 +185,7 @@ function checkEmoteLoverAchievement(user, message, userActivityData, client, cha
 }
 
 function checkGlitteryzouzAchievement(user, message, userActivityData, client, channel) {
-	const glitteryzouzWords = ['vegan', 'veganism', 'tofu', 'glitch', 'bouclettes', 'didier'];
+	const glitteryzouzWords = ['vegan', 'veganisme', 'tofu', 'glitch', 'bouclettes', 'didier'];
 	if (glitteryzouzWords.some(word => message.toLowerCase().includes(word)) && !userActivityData.achievements.includes("glitteryzouz")) {
 		client.say(channel, `${user} a gagné le badge "glitteryzouz" !`);
 		userActivityData.achievements.push("glitteryzouz");
@@ -134,16 +210,45 @@ function checkWordUsageAchievements(user, message, userActivityData, client, cha
 		});
 	});
 
-	userActivityData.wordUsage = wordUsage;
 
+	userActivityData.wordUsage = wordUsage;
+	
 	wordSets.forEach(set => {
 		set.words.forEach(targetWord => {
-			if (wordUsage[targetWord] === set.requiredCount && !userActivityData.achievements.includes(set.achievement)) {
+			if (wordUsage[targetWord] >= set.requiredCount && !userActivityData.achievements.includes(set.achievement)) {
 				client.say(channel, `${user} a gagné le badge "${set.achievement}" !`);
 				userActivityData.achievements.push(set.achievement);
 			}
 		});
 	});
+}
+
+function checkTitleAchievement(user, userActivityData, client, channel) {
+	let totalBadges = userActivityData.achievements.reduce((count, achievement) => {
+		let isWordSetAchievement = wordSets.some(set => set.achievement === achievement);
+		return count + (isWordSetAchievement ? 2 : 1);
+	}, 0);
+
+	if (totalBadges >= 5 && !userActivityData.title) {
+		let randomTitle = titles[Math.floor(Math.random() * titles.length)];
+		userActivityData.title = randomTitle;
+		client.say(channel, `${user} a gagné le titre "${randomTitle}" !`);
+	}
+}
+
+function checkItemAward(user, userActivityData, client, channel) {
+	let totalPoints = userActivityData.achievements.reduce((count, achievement) => {
+		let isWordSetAchievement = wordSets.some(set => set.achievement === achievement);
+		return count + (isWordSetAchievement ? 2 : 1);
+	}, 0);
+
+	if (totalPoints >= 10 && !userActivityData.item) {
+		let randomItem = items[Math.floor(Math.random() * items.length)];
+		let randomNature = natures[Math.floor(Math.random() * natures.length)];
+		let awardedItem = `${randomItem} de ${randomNature}`;
+		userActivityData.item = awardedItem;
+		client.say(channel, `${user} a gagné l'objet "${awardedItem}" !`);
+	}
 }
 
 // Twitch chat client configuration
@@ -183,12 +288,25 @@ client.on('message', (channel, tags, message, self) => {
 
 	// Display achievements command
 	if (message.toLowerCase() === '!achievements' || message.toLowerCase() === '!badges') {
-		let achievements = userActivity[user].achievements.join(', ');
-		let totalBadges = userActivity[user].achievements.length;
+		let achievements = userActivity[user].achievements;
+		let totalBadges = 0;
+		let achievementsList = achievements.map(achievement => {
+			let isWordSetAchievement = wordSets.some(set => set.achievement === achievement);
+			if (isWordSetAchievement) {
+				totalBadges += 2;
+				return `\x1b[32m${achievement}\x1b[0m`; // Green color for word set achievements
+			} else {
+				totalBadges += 1;
+				return achievement;
+			}
+		}).join(', ');
+		
 		if (totalBadges === 0) {
-			achievements = 'Aucun badge gagné pour le moment.';
+			achievementsList = 'Aucun badge gagné pour le moment.';
 		}
-		client.say(channel, `${user}, vos badges (${totalBadges}): ${achievements}`);
+		
+		let title = userActivity[user].title ? `Titre: ${userActivity[user].title}\n` : '';
+		client.say(channel, `${user}, ${title}Vos badges (${totalBadges}): ${achievementsList}`);
 	}
 });
 
