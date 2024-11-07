@@ -138,7 +138,7 @@ function checkChatterboxAchievement(user, userActivityData, client, channel) {
 
 function checkLoyalViewerAchievement(user, currentTime, userActivityData, client, channel) {
     const activeDuration = (currentTime - new Date(userActivityData.firstMessageTime)) / (1000 * 60); // Duration in minutes
-    if (activeDuration >= 30 && !userActivityData.achievements.includes("Spectateur fidèle")) {
+    if (activeDuration >= 1080 && !userActivityData.achievements.includes("Spectateur fidèle")) {
         client.say(channel, `${user} a gagné le badge "Spectateur fidèle" !`);
         userActivityData.achievements.push("Spectateur fidèle");
     }
