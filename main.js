@@ -3,21 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const {
     wordSets,
-    titles,
-    items,
-    natures,
-    checkAchievements,
-    checkNightOwlAchievement,
-    checkPoliteAchievement,
-    checkChatterboxAchievement,
-    checkLoyalViewerAchievement,
-    checkFirstBloodAchievement,
-    checkHelpfulUserAchievement,
-    checkEmoteLoverAchievement,
-    checkGlitteryzouzAchievement,
-    checkWordUsageAchievements,
-    checkTitleAchievement,
-    checkItemAward
+    checkAchievements
 } = require('./achievements');
 require('dotenv').config({ path: './credentials.env' }); // Load environment variables from credentials.env
 
@@ -91,6 +77,16 @@ client.on('message', (channel, tags, message, self) => {
 
         let title = userActivity[user].title ? `Titre: ${userActivity[user].title}\n` : '';
         client.say(channel, `${user}, ${title}Vos badges (${totalBadges}): ${achievementsList}`);
+    }
+
+    // Display awarded item command
+    if (message.toLowerCase() === '!item') {
+        let item = userActivity[user].item;
+        if (item) {
+            client.say(channel, `${user}, votre objet: ${item}`);
+        } else {
+            client.say(channel, `${user}, vous n'avez pas encore gagné d'objet.`);
+        }
     }
 });
 
