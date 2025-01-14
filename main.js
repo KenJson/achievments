@@ -1,10 +1,7 @@
 const tmi = require('tmi.js');
 const fs = require('fs');
 const path = require('path');
-const {
-    wordSets,
-    checkAchievements
-} = require('./achievements');
+const { wordSets, checkAchievements } = require('./achievments');
 require('dotenv').config({ path: './credentials.env' }); // Load environment variables from credentials.env
 
 // Path to the JSON file
