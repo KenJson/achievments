@@ -105,19 +105,9 @@ client.on('message', (channel, tags, message, self) => {
     // Display achievements command
     if (message.toLowerCase() === '!achievements' || message.toLowerCase() === '!badges') {
         let achievements = userActivity[user].achievements;
-        let totalBadges = 0;
-        let achievementsList = achievements.map(achievement => {
-            let isWordSetAchievement = wordSets.some(set => set.achievement === achievement);
-            if (isWordSetAchievement) {
-                totalBadges += 2;
-                return `\x1b[32m${achievement}\x1b[0m`; // Green color for word set achievements
-            } else {
-                totalBadges += 1;
-                return achievement;
-            }
-        }).join(', ');
+        let achievementsList = achievements.join(', ');
 
-        if (totalBadges === 0) {
+        if (achievements.length === 0) {
             client.say(channel, `${user}, vous n'avez pas encore de réalisations.`);
         } else {
             client.say(channel, `${user}, vos réalisations: ${achievementsList}`);
