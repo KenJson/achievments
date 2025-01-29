@@ -89,6 +89,10 @@
       {
         "content": "feufeuille",
         "time": "2025-01-29T16:14:19.302Z"
+      },
+      {
+        "content": "!achievements",
+        "time": "2025-01-29T16:51:37.286Z"
       }
     ],
     "achievements": [
@@ -98,7 +102,10 @@
       "Euphoriazouz",
       "touchée par le divin",
       "sectaire",
-      "feuillu"
+      "feuillu",
+      "cultiste néophite",
+      "fidèle cultiste confirmé",
+      "cultiste supérieur"
     ],
     "wordUsage": {
       "glitteryzouz": 4,

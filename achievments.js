@@ -16,13 +16,13 @@ const wordSets = [
     },
     {
         words: ['pipi', 'caca', 'eupho'],
-        achievement: 'Euphoriazouz',
+        achievement: '💩 Euphoriazouz 🧻',
         threshold: 0.8,
         requiredCount: 3 
     },
     {
         words: ['glitteryglitch', 'patate', 'gueuse'],
-        achievement: 'glitteryzouz',
+        achievement: '☾ glitteryzouz ☾',
         threshold: 0.8,
         requiredCount: 2
     },
@@ -73,8 +73,6 @@ const titles = [
     "pikachu surpris",
     "oo ii cat",
     "base virale mise à jour"
-
-
 ];
 
 const items = [
@@ -145,5 +143,7 @@ function checkWordSetAchievements(user, message, userActivityData, client, chann
 module.exports = {
     wordSets,
     checkAchievements,
-    titles // Export titles
+    titles, // Export titles
+    items, // Export items
+    natures // Export natures
 };
