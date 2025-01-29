@@ -66,17 +66,21 @@ const titles = [
     "aspirateur à pikmin",
     "pikachu surpris",
     "oo ii cat",
-    "base virale mise à jour",
+    "base virale mise à jour"
 
 
 ];
 
 const items = [
-    "Épée", "Bouclier", "Amulette", "Anneau", "Casque", "Armure", "Bottes", "Gants", "Cape", "Bâton"
+    "Épée", "Bouclier", "Amulette", "Anneau", "Casque", "Armure", "Bottes", "Gants", "Cape", "Bâton", 
+    "fourchette", "cuillère à miel", "ciseaux à raisins", "pelle à tarte", "brosse à dents", "tire-bouchon", 
+    "couteau à beurre", "cuillère à café", "fourchette à soupe"
 ];
 
 const natures = [
-    "obsidienne", "honte", "feu", "glace", "vent", "terre", "éclair", "ombre", "lumière", "eau"
+    "obsidienne", "honte", "feu", "glace", "vent", "terre", "éclair", "ombre", "lumière", "eau", "JOIE",
+    "espoir", "slime", "poussière", "sable", "pierre", "mousse", "fumée", "miel", "caramel", "chocolat", "papier",
+    "vorpal", "psychique", "résonnant", "magnétique", "éthéré"
 ];
 
 // Function to check achievements
