@@ -1,7 +1,7 @@
 const tmi = require('tmi.js');
 const fs = require('fs');
 const path = require('path');
-const { wordSets, checkAchievements, titles } = require('./achievments'); // Import titles from achievments.js
+const { wordSets, checkAchievements, titles, items, natures } = require('./achievments'); // Import items and natures from achievments.js
 require('dotenv').config({ path: './credentials.env' }); // Load environment variables from credentials.env
 
 // Path to the JSON file
@@ -21,6 +21,13 @@ function saveUserActivity() {
 // Function to get a random title from the titles list
 function getRandomTitle() {
     return titles[Math.floor(Math.random() * titles.length)];
+}
+
+// Function to get a random item composed of one element from items and one from natures
+function getRandomItem() {
+    const item = items[Math.floor(Math.random() * items.length)];
+    const nature = natures[Math.floor(Math.random() * natures.length)];
+    return `${item} de ${nature}`;
 }
 
 // Twitch chat client configuration
@@ -51,7 +58,8 @@ client.on('message', (channel, tags, message, self) => {
             messages: [],
             achievements: [],
             wordUsage: {},
-            title: null
+            title: null,
+            item: null
         };
     }
     userActivity[user].messages.push({ content: message, time: currentTime });
@@ -64,6 +72,12 @@ client.on('message', (channel, tags, message, self) => {
     if (achievementsCount >= 5 && !userActivity[user].title) {
         userActivity[user].title = getRandomTitle();
         client.say(channel, `${user} a reçu le titre "${userActivity[user].title}" pour avoir obtenu 5 réalisations !`);
+    }
+
+    // Award item based on the number of achievements
+    if (achievementsCount >= 10 && !userActivity[user].item) {
+        userActivity[user].item = getRandomItem();
+        client.say(channel, `${user} a reçu l'objet "${userActivity[user].item}" pour avoir obtenu 10 réalisations !`);
     }
 
     // Display achievements command
