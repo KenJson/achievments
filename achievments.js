@@ -15,31 +15,32 @@ const wordSets = [
         requiredCount: 2
     },
     {
-        words: ['pipi', 'caca', 'eupho'],
+        words: ['pipi', 'caca', 'eupho', 'telenovela', 'Alyn', 'susumimi', 'euphoriasis'],
         achievement: '💩 Euphoriazouz 🧻',
         threshold: 0.8,
         requiredCount: 3 
     },
     {
-        words: ['glitteryglitch', 'patate', 'gueuse'],
+        words: ['glitteryglitch', 'patate', 'gueuse', 'glitch', 'vegan', 'malignon', 'malignon-han' ],
         achievement: '☾ glitteryzouz ☾',
-        threshold: 0.8,
-        requiredCount: 2
-    },
-    {
-        words: ['terrestrine', 'feufeuille', 'terre'],
-        achievement: 'feuillu',
-        threshold: 0.8,
-        requiredCount: 2
-    },
-    {
-        words: ['mode', 'vêtements', 'style'],
-        achievement: 'fashionista',
         threshold: 0.8,
         requiredCount: 3
     },
+    {
+        words: ['terrestrine', 'feufeuille', 'terre', 'iwi', 'feuille'],
+        achievement: '🍃 feuillu 🍂',
+        threshold: 0.8,
+        requiredCount: 3
+    },
+    {
+        words: ['mode', 'vêtements', 'style', 'fashion', 'fashionista'],
+        achievement: 'fashionista',
+        threshold: 0.8,
+        requiredCount: 2
+    },
     // Add more word sets here as needed
 ];
+
 
 // List of titles
 const titles = [
