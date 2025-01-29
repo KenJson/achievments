@@ -77,7 +77,7 @@ function checkAchievements(user, message, userActivityData, client, channel) {
 }
 
 function checkPoliteAchievement(user, message, userActivityData, client, channel) {
-    const politeWords = ["please", "thank you", "sorry"];
+    const politeWords = ['bonjour', 'bonsoir', 'salut', 'hello', 'coucou'];
     politeWords.forEach(word => {
         const similarity = stringSimilarity.compareTwoStrings(message.toLowerCase(), word);
         if (similarity > 0.8 && !userActivityData.achievements.includes('Polite')) {
