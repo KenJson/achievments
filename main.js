@@ -80,6 +80,12 @@ client.on('message', (channel, tags, message, self) => {
         client.say(channel, `${user} a reçu l'objet "${userActivity[user].item}" pour avoir obtenu 10 réalisations !`);
     }
 
+    // Check if the user is a subscriber and award an achievement
+    if (tags.subscriber && !userActivity[user].achievements.includes('fidèle cultiste')) {
+        userActivity[user].achievements.push('fidèle cultiste');
+        client.say(channel, `${user} a gagné le badge "fidèle cultiste" pour être abonné(e) !`);
+    }
+
     // Display achievements command
     if (message.toLowerCase() === '!achievements' || message.toLowerCase() === '!badges') {
         let achievements = userActivity[user].achievements;

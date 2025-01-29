@@ -32,6 +32,12 @@ const wordSets = [
         threshold: 0.8,
         requiredCount: 2
     },
+    {
+        words: ['mode', 'vêtements', 'style'],
+        achievement: 'fashionista',
+        threshold: 0.8,
+        requiredCount: 3
+    },
     // Add more word sets here as needed
 ];
 
