@@ -102,8 +102,8 @@ function checkPoliteAchievement(user, message, userActivityData, client, channel
 function checkWordSetAchievements(user, message, userActivityData, client, channel) {
     wordSets.forEach(set => {
         set.words.forEach(word => {
-            const similarity = stringSimilarity.compareTwoStrings(message.toLowerCase(), word);
-            if (similarity > set.threshold) {
+            const regex = new RegExp(`\\b${word}\\b`, 'i'); // Case-insensitive word boundary match
+            if (regex.test(message)) {
                 if (!userActivityData.wordUsage[set.achievement]) {
                     userActivityData.wordUsage[set.achievement] = 0;
                 }
