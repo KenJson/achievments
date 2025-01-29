@@ -80,10 +80,26 @@ client.on('message', (channel, tags, message, self) => {
         client.say(channel, `${user} a reçu l'objet "${userActivity[user].item}" pour avoir obtenu 10 réalisations !`);
     }
 
-    // Check if the user is a subscriber and award an achievement
-    if (tags.subscriber && !userActivity[user].achievements.includes('fidèle cultiste')) {
-        userActivity[user].achievements.push('fidèle cultiste');
-        client.say(channel, `${user} a gagné le badge "fidèle cultiste" pour être abonné(e) !`);
+    // Check if the user is a subscriber and award achievements based on subscription duration
+    if (tags.subscriber) {
+        const monthsSubscribed = tags['badge-info'] && tags['badge-info'].subscriber ? parseInt(tags['badge-info'].subscriber, 10) : 0;
+
+        if (monthsSubscribed >= 1 && !userActivity[user].achievements.includes('cultiste néophite')) {
+            userActivity[user].achievements.push('cultiste néophite');
+            client.say(channel, `${user} a gagné le badge "cultiste néophite" pour être abonné(e) depuis 1 mois !`);
+        }
+        if (monthsSubscribed >= 3 && !userActivity[user].achievements.includes('fidèle cultiste confirmé')) {
+            userActivity[user].achievements.push('fidèle cultiste confirmé');
+            client.say(channel, `${user} a gagné le badge "fidèle cultiste confirmé" pour être abonné(e) depuis 3 mois !`);
+        }
+        if (monthsSubscribed >= 6 && !userActivity[user].achievements.includes('cultiste supérieur')) {
+            userActivity[user].achievements.push('cultiste supérieur');
+            client.say(channel, `${user} a gagné le badge "cultiste supérieur" pour être abonné(e) depuis 6 mois !`);
+        }
+        if (monthsSubscribed >= 12 && !userActivity[user].achievements.includes('1ère révélation mystique, accès au cercle intérieur du culte')) {
+            userActivity[user].achievements.push('1ère révélation mystique, accès au cercle intérieur du culte');
+            client.say(channel, `${user} a gagné le badge "1ère révélation mystique, accès au cercle intérieur du culte" pour être abonné(e) depuis 12 mois !`);
+        }
     }
 
     // Display achievements command
