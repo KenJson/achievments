@@ -3,7 +3,7 @@ const stringSimilarity = require('string-similarity');
 // Configuration for word sets and achievements
 const wordSets = [
     {
-        words: ['secte', 'sectes'],
+        words: ['secte', 'sectes', 'dogme'],
         achievement: 'sectaire',
         threshold: 0.8,
         requiredCount: 2
@@ -24,13 +24,13 @@ const wordSets = [
         words: ['glitteryglitch', 'patate', 'gueuse'],
         achievement: 'glitteryzouz',
         threshold: 0.8,
-        requiredCount: 3
+        requiredCount: 2
     },
     {
         words: ['terrestrine', 'feufeuille', 'terre'],
         achievement: 'feuillu',
         threshold: 0.8,
-        requiredCount: 3
+        requiredCount: 2
     },
     // Add more word sets here as needed
 ];
@@ -53,7 +53,22 @@ const titles = [
     "héroïne du royaume de OOO",
     "kirby cosplayer",
     "ANOMALY",
-    "twitchbot"
+    "twitchbot",
+    "Énigme des Étoiles",
+    "Alchimiste de mayonnaise",
+    "streamereuse sur soubresaut",
+    "ultimate babe",
+    "divinité de la flemme",
+    "étoile filante",
+    "chateau ambulant",
+    "mouette",
+    "magma tiède",
+    "aspirateur à pikmin",
+    "pikachu surpris",
+    "oo ii cat",
+    "base virale mise à jour",
+
+
 ];
 
 const items = [

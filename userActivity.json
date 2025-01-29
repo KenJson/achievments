@@ -1,113 +1,94 @@
 {
   "Kurokenji": {
-    "firstMessageTime": "2025-01-29T15:06:54.135Z",
+    "firstMessageTime": "2025-01-29T15:13:16.123Z",
     "messages": [
       {
+        "content": "salut c'est moi",
+        "time": "2025-01-29T15:13:16.123Z"
+      },
+      {
         "content": "bonjour",
-        "time": "2025-01-29T15:06:54.135Z"
+        "time": "2025-01-29T15:13:19.751Z"
       },
       {
-        "content": "pipi caca",
-        "time": "2025-01-29T15:07:09.334Z"
-      },
-      {
-        "content": "pipi",
-        "time": "2025-01-29T15:07:12.974Z"
-      },
-      {
-        "content": "eupho",
-        "time": "2025-01-29T15:07:15.382Z"
-      },
-      {
-        "content": "caca",
-        "time": "2025-01-29T15:07:17.651Z"
-      },
-      {
-        "content": "!so @euphoriasis",
-        "time": "2025-01-29T15:07:18.159Z"
-      },
-      {
-        "content": "Allez voir @euphoriasis! Partagez l'amour, répandez le culte!! https://www.twitch.tv/euphoriasis",
-        "time": "2025-01-29T15:07:19.249Z"
-      },
-      {
-        "content": "c'est une grosse secte",
-        "time": "2025-01-29T15:07:39.914Z"
-      },
-      {
-        "content": "un environnement sectaire",
-        "time": "2025-01-29T15:07:45.453Z"
-      },
-      {
-        "content": "secte",
-        "time": "2025-01-29T15:07:49.354Z"
-      },
-      {
-        "content": "tu connais glitteryglitch?",
-        "time": "2025-01-29T15:08:13.144Z"
-      },
-      {
-        "content": "c'est une petite patate",
-        "time": "2025-01-29T15:08:20.795Z"
-      },
-      {
-        "content": "amie des gueuses",
-        "time": "2025-01-29T15:08:27.150Z"
-      },
-      {
-        "content": "je sais pas",
-        "time": "2025-01-29T15:08:39.614Z"
-      },
-      {
-        "content": "glitteryglitch",
-        "time": "2025-01-29T15:08:47.743Z"
-      },
-      {
-        "content": "patate",
-        "time": "2025-01-29T15:09:00.123Z"
-      },
-      {
-        "content": "gueuse",
-        "time": "2025-01-29T15:09:04.239Z"
-      },
-      {
-        "content": "!so @glitteryglitch",
-        "time": "2025-01-29T15:09:04.776Z"
-      },
-      {
-        "content": "Allez voir @glitteryglitch! Partagez l'amour, répandez le culte!! https://www.twitch.tv/glitteryglitch",
-        "time": "2025-01-29T15:09:05.826Z"
-      },
-      {
-        "content": "tu connais terrestrine ?",
-        "time": "2025-01-29T15:09:58.322Z"
+        "content": "tu connais terrestrine?",
+        "time": "2025-01-29T15:13:26.589Z"
       },
       {
         "content": "c'est un élément de terre",
-        "time": "2025-01-29T15:10:04.969Z"
+        "time": "2025-01-29T15:13:38.483Z"
       },
       {
-        "content": "caché dans les feufeuilles",
-        "time": "2025-01-29T15:10:10.575Z"
+        "content": "!so @glitteryglitch",
+        "time": "2025-01-29T15:17:06.876Z"
       },
       {
-        "content": "feufeuilles",
-        "time": "2025-01-29T15:10:37.600Z"
+        "content": "Allez voir @glitteryglitch! Partagez l'amour, répandez le culte!! https://www.twitch.tv/glitteryglitch",
+        "time": "2025-01-29T15:17:07.378Z"
+      }
+    ],
+    "achievements": [
+      "First Message",
+      "Polite"
+    ],
+    "wordUsage": {
+      "feuillu": 2,
+      "glitteryzouz": 2
+    },
+    "title": null
+  },
+  "GlitteryGlitch": {
+    "firstMessageTime": "2025-01-29T15:15:29.177Z",
+    "messages": [
+      {
+        "content": "salut",
+        "time": "2025-01-29T15:15:29.177Z"
+      },
+      {
+        "content": "test test test Dieu",
+        "time": "2025-01-29T15:15:57.114Z"
+      },
+      {
+        "content": "test test test divin",
+        "time": "2025-01-29T15:16:02.135Z"
+      },
+      {
+        "content": "secte",
+        "time": "2025-01-29T15:16:33.903Z"
+      },
+      {
+        "content": "sectes",
+        "time": "2025-01-29T15:16:36.730Z"
+      },
+      {
+        "content": "gueuse",
+        "time": "2025-01-29T15:16:44.694Z"
+      },
+      {
+        "content": "patate",
+        "time": "2025-01-29T15:16:50.442Z"
+      },
+      {
+        "content": "potate",
+        "time": "2025-01-29T15:16:53.030Z"
+      },
+      {
+        "content": "glitteryglitch",
+        "time": "2025-01-29T15:17:06.381Z"
       }
     ],
     "achievements": [
       "First Message",
       "Polite",
-      "Euphoriazouz",
+      "touchée par le divin",
       "sectaire",
       "glitteryzouz"
     ],
     "wordUsage": {
-      "Euphoriazouz": 3,
+      "touchée par le divin": 2,
       "sectaire": 2,
-      "glitteryzouz": 4,
-      "feuillu": 1
+      "glitteryzouz": 3
     },
-    "title": "Barbarracuda"
+    "title": "BarBarista"
   }
 }
