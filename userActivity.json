@@ -77,17 +77,63 @@
       {
         "content": "haha",
         "time": "2025-01-29T14:32:09.357Z"
+      },
+      {
+        "content": "patate",
+        "time": "2025-01-29T14:32:58.473Z"
+      },
+      {
+        "content": "gueuse",
+        "time": "2025-01-29T14:33:01.712Z"
+      },
+      {
+        "content": "glitteryglotch",
+        "time": "2025-01-29T14:33:11.249Z"
+      },
+      {
+        "content": "glitteryglitch",
+        "time": "2025-01-29T14:33:16.115Z"
+      },
+      {
+        "content": "patate",
+        "time": "2025-01-29T14:33:33.504Z"
+      },
+      {
+        "content": "gueuse",
+        "time": "2025-01-29T14:33:36.744Z"
+      },
+      {
+        "content": "glitteryglotch",
+        "time": "2025-01-29T14:33:40.411Z"
+      },
+      {
+        "content": "!so @glitteryglitch",
+        "time": "2025-01-29T14:33:40.920Z"
+      },
+      {
+        "content": "Allez voir @glitteryglitch! Partagez l'amour, répandez le culte!! https://www.twitch.tv/glitteryglitch",
+        "time": "2025-01-29T14:33:42.020Z"
+      },
+      {
+        "content": "!achievments",
+        "time": "2025-01-29T14:51:18.710Z"
+      },
+      {
+        "content": "!achievements",
+        "time": "2025-01-29T14:51:24.537Z"
       }
     ],
     "achievements": [
       "First Message",
       "Polite",
       "Euphoriazouz",
-      "touchée par le divin"
+      "touchée par le divin",
+      "glitteryzouz"
     ],
     "wordUsage": {
       "Euphoriazouz": 1,
-      "touchée par le divin": 2
+      "touchée par le divin": 2,
+      "glitteryzouz": 4
     }
   }
 }

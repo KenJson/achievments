@@ -18,11 +18,17 @@ const wordSets = [
         words: ['pipi', 'caca', 'eupho'],
         achievement: 'Euphoriazouz',
         threshold: 0.8,
-        requiredCount: 3 // Since we want either "pipi" or "caca" to trigger the achievement
+        requiredCount: 3 
     },
     {
         words: ['glitteryglitch', 'patate', 'gueuse'],
         achievement: 'glitteryzouz',
+        threshold: 0.8,
+        requiredCount: 3
+    },
+    {
+        words: ['terrestrine', 'feufeuille', 'terre'],
+        achievement: 'feuillu',
         threshold: 0.8,
         requiredCount: 3
     },
@@ -83,7 +89,7 @@ function checkAchievements(user, message, userActivityData, client, channel) {
 }
 
 function checkPoliteAchievement(user, message, userActivityData, client, channel) {
-    const politeWords = ['bonjour', 'bonsoir', 'salut', 'hello', 'coucou'];
+    const politeWords = ["bonjour", "bonsoir", "salut", "hello", "coucou"];
     politeWords.forEach(word => {
         const similarity = stringSimilarity.compareTwoStrings(message.toLowerCase(), word);
         if (similarity > 0.8 && !userActivityData.achievements.includes('Polite')) {
@@ -113,9 +119,6 @@ function checkWordSetAchievements(user, message, userActivityData, client, chann
 
 module.exports = {
     wordSets,
-    titles,
-    items,
-    natures,
     checkAchievements,
-    checkPoliteAchievement
+    titles // Export titles
 };
