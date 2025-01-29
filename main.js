@@ -1,7 +1,7 @@
 const tmi = require('tmi.js');
 const fs = require('fs');
 const path = require('path');
-const { wordSets, checkAchievements } = require('./achievments'); // Corrected to match your file name
+const { wordSets, checkAchievements, titles } = require('./achievments'); // Import titles from achievments.js
 require('dotenv').config({ path: './credentials.env' }); // Load environment variables from credentials.env
 
 // Path to the JSON file
@@ -16,6 +16,11 @@ if (fs.existsSync(dataFilePath)) {
 // Function to save user activity to the JSON file
 function saveUserActivity() {
     fs.writeFileSync(dataFilePath, JSON.stringify(userActivity, null, 2), 'utf8');
+}
+
+// Function to get a random title from the titles list
+function getRandomTitle() {
+    return titles[Math.floor(Math.random() * titles.length)];
 }
 
 // Twitch chat client configuration
@@ -45,13 +50,21 @@ client.on('message', (channel, tags, message, self) => {
             firstMessageTime: currentTime,
             messages: [],
             achievements: [],
-            wordUsage: {}
+            wordUsage: {},
+            title: null
         };
     }
     userActivity[user].messages.push({ content: message, time: currentTime });
 
     // Check for achievements
     checkAchievements(user, message, userActivity[user], client, channel);
+
+    // Assign title based on the number of achievements
+    const achievementsCount = userActivity[user].achievements.length;
+    if (achievementsCount >= 5 && !userActivity[user].title) {
+        userActivity[user].title = getRandomTitle();
+        client.say(channel, `${user} a reçu le titre "${userActivity[user].title}" pour avoir obtenu 5 réalisations !`);
+    }
 
     // Display achievements command
     if (message.toLowerCase() === '!achievements' || message.toLowerCase() === '!badges') {
