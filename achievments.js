@@ -15,10 +15,16 @@ const wordSets = [
         requiredCount: 2
     },
     {
-        words: ['pipi', 'caca'],
+        words: ['pipi', 'caca', 'eupho'],
         achievement: 'Euphoriazouz',
         threshold: 0.8,
-        requiredCount: 2 // Since we want either "pipi" or "caca" to trigger the achievement
+        requiredCount: 3 // Since we want either "pipi" or "caca" to trigger the achievement
+    },
+    {
+        words: ['glitteryglitch', 'patate', 'gueuse'],
+        achievement: 'glitteryzouz',
+        threshold: 0.8,
+        requiredCount: 3
     },
     // Add more word sets here as needed
 ];
