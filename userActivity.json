@@ -1,1 +1,59 @@
-{}
+{
+  "Kurokenji": {
+    "firstMessageTime": "2025-01-29T14:04:16.476Z",
+    "messages": [
+      {
+        "content": "pipi",
+        "time": "2025-01-29T14:04:16.476Z"
+      },
+      {
+        "content": "pipi",
+        "time": "2025-01-29T14:04:21.147Z"
+      },
+      {
+        "content": "caca",
+        "time": "2025-01-29T14:04:24.665Z"
+      },
+      {
+        "content": "vegan",
+        "time": "2025-01-29T14:04:30.483Z"
+      },
+      {
+        "content": "please",
+        "time": "2025-01-29T14:04:40.861Z"
+      },
+      {
+        "content": "pipi",
+        "time": "2025-01-29T14:04:59.017Z"
+      },
+      {
+        "content": "pipi",
+        "time": "2025-01-29T14:05:02.154Z"
+      },
+      {
+        "content": "pipi",
+        "time": "2025-01-29T14:05:03.635Z"
+      },
+      {
+        "content": "pipi",
+        "time": "2025-01-29T14:15:16.466Z"
+      },
+      {
+        "content": "!so @euphoriasis",
+        "time": "2025-01-29T14:15:17.537Z"
+      },
+      {
+        "content": "Allez voir @euphoriasis! Partagez l'amour, répandez le culte!! https://www.twitch.tv/euphoriasis",
+        "time": "2025-01-29T14:15:18.665Z"
+      }
+    ],
+    "achievements": [
+      "First Message",
+      "Polite",
+      "Euphoriazouz"
+    ],
+    "wordUsage": {
+      "Euphoriazouz": 1
+    }
+  }
+}

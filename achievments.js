@@ -6,54 +6,25 @@ const wordSets = [
         words: ['secte', 'sectes'],
         achievement: 'sectaire',
         threshold: 0.8,
-        requiredCount: 5
+        requiredCount: 2
     },
     {
         words: ['dieu', 'dieux', 'divin'],
         achievement: 'touchée par le divin',
         threshold: 0.8,
-        requiredCount: 5
+        requiredCount: 2
     },
     {
         words: ['pipi', 'caca'],
         achievement: 'Euphoriazouz',
         threshold: 0.8,
-        requiredCount: 1 // Since we want either "pipi" or "caca" to trigger the achievement
+        requiredCount: 2 // Since we want either "pipi" or "caca" to trigger the achievement
     },
     // Add more word sets here as needed
 ];
 
 // List of titles
 const titles = [
-    "Mage des Brumes Égarées",
-    "Évocateur de Légumes Sacrés",
-    "Chevalier de l'Ombre Murmurante",
-    "Paladin du Fromage Fondant",
-    "Sorcier de la Nuit Perdue",
-    "Barde des Échos Oubliés",
-    "Moine du Poing Chantant",
-    "Nécromancien des Croissants",
-    "Gardien du Grimoire de Poudre",
-    "Invocateur des Abysses Sucrées",
-    "Chaman des Vagues Silencieuses",
-    "Berserker du Café Maudit",
-    "Druide des Flammes Sauvages",
-    "Érudit des Fleurs Venimeuses",
-    "Chasseur de Nuages Errants",
-    "Rôdeur des Bois Tremblants",
-    "Artificier des Éclairs Chocolatés",
-    "Illusionniste des Rêves Brisés",
-    "Templier de l'Anchois Sacré",
-    "Assassin des Ombres Croustillantes",
-    "Comptable de Bhaal",
-    "Assassin Divin",
-    "Buff Princess",
-    "Barde des Ténèbres Lunaires",
-    "Voleur de Cœurs Impossibles",
-    "Cartographe des Étoiles Oubliées",
-    "Barbare-ella",
-    "Barbarde",
-    "Barbarbier",
     "BarBarista",
     "Barbardeur",
     "Barbarracuda",
@@ -82,155 +53,56 @@ const natures = [
 ];
 
 // Function to check achievements
-function checkAchievements(user, message, userActivity, client, channel) {
-    let currentTime = new Date();
-    let userActivityData = userActivity[user];
-
-    checkNightOwlAchievement(user, currentTime, userActivityData, client, channel);
-    checkPoliteAchievement(user, message, userActivityData, client, channel);
-    checkChatterboxAchievement(user, userActivityData, client, channel);
-    checkLoyalViewerAchievement(user, currentTime, userActivityData, client, channel);
-    checkFirstBloodAchievement(user, userActivityData, client, channel);
-    checkHelpfulUserAchievement(user, message, userActivityData, client, channel);
-    checkEmoteLoverAchievement(user, message, userActivityData, client, channel);
-    checkGlitteryzouzAchievement(user, message, userActivityData, client, channel);
-    checkWordUsageAchievements(user, message, userActivityData, client, channel);
-
-    // Check for title achievement
-    checkTitleAchievement(user, userActivityData, client, channel);
-
-    // Check for item award
-    checkItemAward(user, userActivityData, client, channel);
-
-    // Save user activity after checking achievements
-    saveUserActivity();
-}
-
-function checkNightOwlAchievement(user, currentTime, userActivityData, client, channel) {
-    if ((currentTime.getHours() >= 23 || currentTime.getHours() < 6) && !userActivityData.achievements.includes("Oiseau de nuit")) {
-        client.say(channel, `${user} a gagné le badge "Oiseau de nuit" !`);
-        userActivityData.achievements.push("Oiseau de nuit");
+function checkAchievements(user, message, userActivityData, client, channel) {
+    // Ensure userActivityData is defined and has the necessary properties
+    if (!userActivityData || !userActivityData.messages) {
+        return;
     }
+
+    // Example achievement check: First message achievement
+    if (userActivityData.messages.length === 1) {
+        if (!userActivityData.achievements.includes('First Message')) {
+            userActivityData.achievements.push('First Message');
+            client.say(channel, `${user} a gagné le badge "First Message" !`);
+        }
+    }
+
+    // Example achievement check: Polite achievement
+    checkPoliteAchievement(user, message, userActivityData, client, channel);
+
+    // Check for word set achievements
+    checkWordSetAchievements(user, message, userActivityData, client, channel);
+
+    // Add more achievement checks here
 }
 
 function checkPoliteAchievement(user, message, userActivityData, client, channel) {
-    const politeWords = ['bonjour', 'bonsoir', 'salut', 'hello', 'coucou'];
-    const threshold = 0.8; // Similar threshold
-
-    if (userActivityData.messages.length === 1) {
-        for (const word of politeWords) {
-            const similarity = stringSimilarity.compareTwoStrings(message.toLowerCase(), word);
-            if (similarity >= threshold && !userActivityData.achievements.includes("Poli")) {
-                client.say(channel, `${user} a gagné le badge "Poli" !`);
-                userActivityData.achievements.push("Poli");
-                break;
-            }
+    const politeWords = ["please", "thank you", "sorry"];
+    politeWords.forEach(word => {
+        const similarity = stringSimilarity.compareTwoStrings(message.toLowerCase(), word);
+        if (similarity > 0.8 && !userActivityData.achievements.includes('Polite')) {
+            userActivityData.achievements.push('Polite');
+            client.say(channel, `${user} a gagné le badge "Polite" !`);
         }
-    }
-}
-
-function checkChatterboxAchievement(user, userActivityData, client, channel) {
-    if (userActivityData.messages.length === 10 && !userActivityData.achievements.includes("Bavard")) {
-        client.say(channel, `${user} a gagné le badge "Bavard" !`);
-        userActivityData.achievements.push("Bavard");
-    }
-}
-
-function checkLoyalViewerAchievement(user, currentTime, userActivityData, client, channel) {
-    const activeDuration = (currentTime - new Date(userActivityData.firstMessageTime)) / (1000 * 60); // Duration in minutes
-    if (activeDuration >= 1080 && !userActivityData.achievements.includes("Spectateur fidèle")) {
-        client.say(channel, `${user} a gagné le badge "Spectateur fidèle" !`);
-        userActivityData.achievements.push("Spectateur fidèle");
-    }
-}
-
-function checkFirstBloodAchievement(user, userActivityData, client, channel) {
-    if (Object.keys(userActivity).length === 1 && !userActivityData.achievements.includes("Premier sang")) {
-        client.say(channel, `${user} a gagné le badge "Premier sang" !`);
-        userActivityData.achievements.push("Premier sang");
-    }
-}
-
-function checkHelpfulUserAchievement(user, message, userActivityData, client, channel) {
-    if (message.toLowerCase().includes('help') && !userActivityData.achievements.includes("Utilisateur utile")) {
-        client.say(channel, `${user} a gagné le badge "Utilisateur utile" !`);
-        userActivityData.achievements.push("Utilisateur utile");
-    }
-}
-
-function checkEmoteLoverAchievement(user, message, userActivityData, client, channel) {
-    const emoteCount = (message.match(/:\w+:/g) || []).length;
-    if (emoteCount > 5 && !userActivityData.achievements.includes("Amoureux des émoticônes")) {
-        client.say(channel, `${user} a gagné le badge "Amoureux des émoticônes" !`);
-        userActivityData.achievements.push("Amoureux des émoticônes");
-    }
-}
-
-function checkGlitteryzouzAchievement(user, message, userActivityData, client, channel) {
-    const glitteryzouzWords = ['vegan', 'veganism', 'tofu', 'glitch', 'bouclettes', 'didier'];
-    if (glitteryzouzWords.some(word => message.toLowerCase().includes(word)) && !userActivityData.achievements.includes("glitteryzouz")) {
-        client.say(channel, `${user} a gagné le badge "glitteryzouz" !`);
-        userActivityData.achievements.push("glitteryzouz");
-    }
-}
-
-function checkWordUsageAchievements(user, message, userActivityData, client, channel) {
-    const words = message.toLowerCase().split(/\s+/);
-    const wordUsage = userActivityData.wordUsage || {};
-
-    words.forEach(word => {
-        wordSets.forEach(set => {
-            set.words.forEach(targetWord => {
-                const similarity = stringSimilarity.compareTwoStrings(word, targetWord);
-                if (similarity >= set.threshold) {
-                    if (!wordUsage[targetWord]) {
-                        wordUsage[targetWord] = 0;
-                    }
-                    wordUsage[targetWord]++;
-                }
-            });
-        });
     });
+}
 
-    userActivityData.wordUsage = wordUsage;
-
+function checkWordSetAchievements(user, message, userActivityData, client, channel) {
     wordSets.forEach(set => {
-        set.words.forEach(targetWord => {
-            if (wordUsage[targetWord] === set.requiredCount && !userActivityData.achievements.includes(set.achievement)) {
-                client.say(channel, `${user} a gagné le badge "${set.achievement}" !`);
-                userActivityData.achievements.push(set.achievement);
+        set.words.forEach(word => {
+            const similarity = stringSimilarity.compareTwoStrings(message.toLowerCase(), word);
+            if (similarity > set.threshold) {
+                if (!userActivityData.wordUsage[set.achievement]) {
+                    userActivityData.wordUsage[set.achievement] = 0;
+                }
+                userActivityData.wordUsage[set.achievement]++;
+                if (userActivityData.wordUsage[set.achievement] >= set.requiredCount && !userActivityData.achievements.includes(set.achievement)) {
+                    userActivityData.achievements.push(set.achievement);
+                    client.say(channel, `${user} a gagné le badge "${set.achievement}" !`);
+                }
             }
         });
     });
-}
-
-function checkTitleAchievement(user, userActivityData, client, channel) {
-    let totalBadges = userActivityData.achievements.reduce((count, achievement) => {
-        let isWordSetAchievement = wordSets.some(set => set.achievement === achievement);
-        return count + (isWordSetAchievement ? 2 : 1);
-    }, 0);
-
-    if (totalBadges >= 5 && !userActivityData.title) {
-        let randomTitle = titles[Math.floor(Math.random() * titles.length)];
-        userActivityData.title = randomTitle;
-        client.say(channel, `${user} a gagné le titre "${randomTitle}" !`);
-    }
-}
-
-// Function to check if the user has reached 10 points and award an item
-function checkItemAward(user, userActivityData, client, channel) {
-    let totalPoints = userActivityData.achievements.reduce((count, achievement) => {
-        let isWordSetAchievement = wordSets.some(set => set.achievement === achievement);
-        return count + (isWordSetAchievement ? 2 : 1);
-    }, 0);
-
-    if (totalPoints >= 10 && !userActivityData.item) {
-        let randomItem = items[Math.floor(Math.random() * items.length)];
-        let randomNature = natures[Math.floor(Math.random() * natures.length)];
-        let awardedItem = `${randomItem} de ${randomNature}`;
-        userActivityData.item = awardedItem;
-        client.say(channel, `${user} a gagné l'objet "${awardedItem}" !`);
-    }
 }
 
 module.exports = {
@@ -239,15 +111,5 @@ module.exports = {
     items,
     natures,
     checkAchievements,
-    checkNightOwlAchievement,
-    checkPoliteAchievement,
-    checkChatterboxAchievement,
-    checkLoyalViewerAchievement,
-    checkFirstBloodAchievement,
-    checkHelpfulUserAchievement,
-    checkEmoteLoverAchievement,
-    checkGlitteryzouzAchievement,
-    checkWordUsageAchievements,
-    checkTitleAchievement,
-    checkItemAward
+    checkPoliteAchievement
 };

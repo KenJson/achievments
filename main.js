@@ -1,7 +1,7 @@
 const tmi = require('tmi.js');
 const fs = require('fs');
 const path = require('path');
-const { wordSets, checkAchievements } = require('./achievments');
+const { wordSets, checkAchievements } = require('./achievments'); // Corrected to match your file name
 require('dotenv').config({ path: './credentials.env' }); // Load environment variables from credentials.env
 
 // Path to the JSON file
@@ -51,7 +51,7 @@ client.on('message', (channel, tags, message, self) => {
     userActivity[user].messages.push({ content: message, time: currentTime });
 
     // Check for achievements
-    checkAchievements(user, message, userActivity, client, channel);
+    checkAchievements(user, message, userActivity[user], client, channel);
 
     // Display achievements command
     if (message.toLowerCase() === '!achievements' || message.toLowerCase() === '!badges') {
@@ -69,22 +69,14 @@ client.on('message', (channel, tags, message, self) => {
         }).join(', ');
 
         if (totalBadges === 0) {
-            achievementsList = 'Aucun badge gagné pour le moment.';
-        }
-
-        let title = userActivity[user].title ? `Titre: ${userActivity[user].title}\n` : '';
-        client.say(channel, `${user}, ${title}Vos badges (${totalBadges}): ${achievementsList}`);
-    }
-
-    // Display awarded item command
-    if (message.toLowerCase() === '!item') {
-        let item = userActivity[user].item;
-        if (item) {
-            client.say(channel, `${user}, votre objet: ${item}`);
+            client.say(channel, `${user}, vous n'avez pas encore de réalisations.`);
         } else {
-            client.say(channel, `${user}, vous n'avez pas encore gagné d'objet.`);
+            client.say(channel, `${user}, vos réalisations: ${achievementsList}`);
         }
     }
+
+    // Save user activity data after handling the message
+    saveUserActivity();
 });
 
 // Connect to Twitch
